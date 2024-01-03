@@ -9,7 +9,9 @@ import com.querydsl.core.types.Visitor;
 import com.querydsl.core.types.dsl.*;
 import lombok.Getter;
 import org.hibernate.AssertionFailure;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
@@ -50,6 +52,11 @@ public class JsonPath implements Path<Object> {
     Type type = path.getAnnotatedElement().getAnnotation(Type.class);
     if (type != null) {
       return type.value().getName().contains("JsonBinaryType");
+    }
+
+    var jdbcTypeCode = path.getAnnotatedElement().getAnnotation(JdbcTypeCode.class);
+    if (jdbcTypeCode != null) {
+      return jdbcTypeCode.value() == SqlTypes.JSON;
     }
     return false;
   }

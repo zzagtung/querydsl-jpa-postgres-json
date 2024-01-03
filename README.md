@@ -16,7 +16,7 @@ Java work with PostgreSQL
 <dependency>
     <groupId>com.github.alexliesenfeld</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
-    <version>0.0.7</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ public class PostgreSQLCustomDialect extends PostgreSQLDialect {
 ```
 
 ### Define entity
-* [vladmihalcea/hibernate-types](https://github.com/vladmihalcea/hibernate-types) provide json type support for hibernate
+* [vladmihalcea/hibernate-types](https://github.com/vladmihalcea/hibernate-types) provide json type support for hibernate. **_Needs only hibernate version 5._**
 
 ```xml
 <dependency>
@@ -66,6 +66,25 @@ class UserEntity {
   JsonNode attributes;
   @Type(type="jsonb")
   Map<String,String> labels;
+}
+```
+
+* Hibernate 6
+
+```java
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+@Entity
+@Table(name = "users")
+@Setter
+@Getter
+class UserEntity {
+    Integer id;
+    @JdbcTypeCode(SqlTypes.JSON)
+    JsonNode attributes;
+    @JdbcTypeCode(SqlTypes.JSON)
+    Map<String, String> labels;
 }
 ```
 

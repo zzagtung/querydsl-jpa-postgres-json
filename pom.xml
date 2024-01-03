@@ -4,24 +4,24 @@
 
     <groupId>com.github.alexliesenfeld</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Querydsl extension for using PostgreSQL JSON types with JPA</description>
-    <url>https://github.com/alexliesenfeld/querydsl-jpa-postgres-json</url>
+    <url>https://github.com/zzagtung/querydsl-jpa-postgres-json</url>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <querydsl.version>5.0.0</querydsl.version>
-        <!-- spring boot 3.1.2 versions -->
-        <hibernate.version>6.2.6.Final</hibernate.version>
-        <lombok.version>1.18.28</lombok.version>
-        <jackson.version>2.15.2</jackson.version>
-        <hypersistence.version>3.5.1</hypersistence.version>
-        <spring-boot.version>3.1.2</spring-boot.version>
+        <!-- spring boot 3.2.0 versions -->
+        <hibernate.version>6.3.1.Final</hibernate.version>
+        <lombok.version>1.18.30</lombok.version>
+        <jackson.version>2.15.3</jackson.version>
+        <hypersistence.version>3.7.0</hypersistence.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
     </properties>
 
     <dependencies>
@@ -42,14 +42,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-60</artifactId>
-            <version>${hypersistence.version}</version>
         </dependency>
 
         <dependency>
@@ -231,6 +226,16 @@
         </plugins>
     </build>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.2.3</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
 
     <profiles>
         <profile>
@@ -246,7 +251,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -285,12 +290,16 @@
             <name>Alexander Liesenfeld</name>
             <email>alexander.liesenfeld@outlook.com</email>
         </developer>
+        <developer>
+            <name>Kwonki Yoon</name>
+            <email>zzagtung@gmail.com</email>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/alexliesenfeld/querydsl-jpa-postgres-json.git</connection>
-        <developerConnection>scm:git:https://github.com/alexliesenfeld/querydsl-jpa-postgres-json.git</developerConnection>
-        <url>http://github.com/alexliesenfeld/querydsl-jpa-postgres-json</url>
+        <connection>scm:git:https://github.com/zzagtung/querydsl-jpa-postgres-json.git</connection>
+        <developerConnection>scm:git:https://github.com/zzagtung/querydsl-jpa-postgres-json.git</developerConnection>
+        <url>http://github.com/zzagtung/querydsl-jpa-postgres-json</url>
         <tag>HEAD</tag>
     </scm>
 

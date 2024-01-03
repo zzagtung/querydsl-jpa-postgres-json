@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.AssertionFailure;
 import org.hibernate.query.sqm.function.AbstractSqmSelfRenderingFunctionDescriptor;
+import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.query.sqm.produce.function.StandardArgumentsValidators;
 import org.hibernate.query.sqm.produce.function.StandardFunctionReturnTypeResolvers;
 import org.hibernate.sql.ast.SqlAstTranslator;
@@ -45,7 +46,7 @@ public abstract class AbstractJsonSQLFunction
     if (!(arg instanceof Assignable))
       throw new AssertionFailure("Not assignable");
 
-    ColumnReference columnReference = ((Assignable) arg).getColumnReferences().get(0);
+    ColumnReference columnReference = ((Assignable) arg).getColumnReferences().getFirst();
     sb.append(columnReference.getExpressionText());
 
     for (int i = to - 1; i >= from + 1; i--) {
@@ -60,6 +61,15 @@ public abstract class AbstractJsonSQLFunction
             StandardArgumentsValidators.between(minimalArgumentCount, maximalArgumentCount),
             StandardFunctionReturnTypeResolvers.invariant(JavaObjectType.INSTANCE),
             null
+    );
+  }
+
+  protected AbstractJsonSQLFunction(FunctionReturnTypeResolver returnTypeResolver) {
+    super(
+        "sql",
+        StandardArgumentsValidators.between(minimalArgumentCount, maximalArgumentCount),
+        returnTypeResolver,
+        null
     );
   }
 

@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: com.github.alexliesenfeld.querydsl.jpa.hibernate.PostgreSQLJsonDialect
+#spring.jpa.database-platform=org.hibernate.dialect.PostgresPlusDialect
+
+#Debug SQL
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace

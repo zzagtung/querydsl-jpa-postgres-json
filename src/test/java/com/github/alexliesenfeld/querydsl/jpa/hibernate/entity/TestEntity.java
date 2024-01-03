@@ -2,13 +2,13 @@ package com.github.alexliesenfeld.querydsl.jpa.hibernate.entity;
 
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.EnumTest;
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.dto.SampleData;
-import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 import java.util.Map;
@@ -28,17 +28,12 @@ public class TestEntity {
     private String extension;
     private long length;
 
-    @Column(columnDefinition = "jsonb")
-    @Type(JsonBinaryType.class)
-//    @JdbcTypeCode(SqlTypes.JSON)
+    @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, String> tags;
 
-    @Column(columnDefinition = "jsonb")
-    @Type(JsonBinaryType.class)
-//    @JdbcTypeCode(SqlTypes.JSON)
+    @JdbcTypeCode(SqlTypes.JSON)
     private SampleData childParam;
 
-    @Column(columnDefinition = "jsonb")
-    @Type(JsonBinaryType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     private List<EnumTest> enumList;
 }
