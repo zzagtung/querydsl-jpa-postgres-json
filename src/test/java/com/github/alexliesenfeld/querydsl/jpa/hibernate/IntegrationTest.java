@@ -7,16 +7,14 @@ import com.github.alexliesenfeld.querydsl.jpa.hibernate.entity.TestEntity;
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.initializer.Initializer;
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.repository.TestRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.LinkedHashMap;
@@ -25,17 +23,14 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
-//@ExtendWith({SpringExtension.class})
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource("classpath:application.properties")
 @ContextConfiguration(classes = {IntegrationTest.TestConfig.class}, initializers ={Initializer.class})
 public class IntegrationTest {
 
     @SpringBootApplication
-    @TestPropertySource("classpath:application.properties")
-    @ContextConfiguration(initializers ={ Initializer.class})
+    @ContextConfiguration
     static class TestConfig {}
 
     @Autowired
@@ -47,7 +42,7 @@ public class IntegrationTest {
         testEntity.setFileId(UUID.randomUUID());
         testEntity.setExtension("txt");
         testEntity.setFileName("filename");
-        testEntity.setLength(10l);
+        testEntity.setLength(10L);
         testEntity.setEnumList(List.of(EnumTest.TEST1));
         testEntity.setChildParam(SampleData.builder()
                         .idField(0)
@@ -59,6 +54,7 @@ public class IntegrationTest {
                                 .longClsField(4L)
                                 .fieldString("5")
                                 .build())
+                .stringArray(List.of("a", "b", "c"))
                 .build());
         Map<String, String> tags = new LinkedHashMap<>();
         tags.put("key1", "val1");
@@ -84,6 +80,7 @@ public class IntegrationTest {
                         .longClsField(10L)
                         .fieldString("11")
                         .build())
+                .stringArray(List.of("b", "c"))
                 .build());
 
         tags = new LinkedHashMap<>();
@@ -99,13 +96,15 @@ public class IntegrationTest {
         BooleanExpression exp = expression.and(jsonPath.get("key1").asText().eq("val21"));
 
         JsonPath childCheck = JsonPath.of(q.childParam);
-        exp = exp.and(childCheck.get("child").get("longField").asLong().eq(9L));
+        exp = exp.and(childCheck.get("child").get("longField").asLong().goe(9L));
+        exp = exp.and(childCheck.get("stringArray").contains("b"));
 
         JsonPath listPath = JsonPath.of(q.enumList);
-        exp = exp.and(listPath.contains(EnumTest.TEST3));
+        exp = exp.and(listPath.contains(EnumTest.TEST1));
+
         Iterable<TestEntity> entities = testRepository.findAll(exp);
 
-        Assert.assertEquals(1, StreamSupport.stream(entities.spliterator(), false).count());
+        Assertions.assertEquals(1, StreamSupport.stream(entities.spliterator(), false).count());
 
     }
 
@@ -139,9 +138,10 @@ public class IntegrationTest {
         QTestEntity q = QTestEntity.testEntity;
         JsonPath listPath = JsonPath.of(q.enumList);
         BooleanExpression exp = listPath.contains(EnumTest.TEST3);
+
         Iterable<TestEntity> entities = testRepository.findAll(exp);
 
-        Assert.assertEquals(1, StreamSupport.stream(entities.spliterator(), false).count());
+        Assertions.assertEquals(1, StreamSupport.stream(entities.spliterator(), false).count());
 
     }
     // tests

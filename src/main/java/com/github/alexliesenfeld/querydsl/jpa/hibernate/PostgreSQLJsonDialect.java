@@ -1,14 +1,8 @@
 package com.github.alexliesenfeld.querydsl.jpa.hibernate;
 
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.functions.types.*;
-import io.hypersistence.utils.hibernate.type.json.internal.JsonBinaryJdbcTypeDescriptor;
-
 import org.hibernate.boot.model.FunctionContributions;
-import org.hibernate.boot.model.TypeContributions;
 import org.hibernate.dialect.PostgresPlusDialect;
-import org.hibernate.service.ServiceRegistry;
-
-import java.sql.Types;
 
 /**
  * @author <a href=http://github.com/wenerme>wener</a>
@@ -49,10 +43,4 @@ public class PostgreSQLJsonDialect extends PostgresPlusDialect {
 
   }
 
-  @Override
-  public void contributeTypes(TypeContributions typeContributions, ServiceRegistry serviceRegistry) {
-    super.contributeTypes(typeContributions, serviceRegistry);
-    typeContributions.getTypeConfiguration().getJdbcTypeRegistry().addDescriptor(Types.JAVA_OBJECT, new JsonBinaryJdbcTypeDescriptor());
-    typeContributions.getTypeConfiguration().getJdbcTypeRegistry().addDescriptor(Types.JAVA_OBJECT, new JsonBinaryJdbcTypeDescriptor());
-  }
 }
