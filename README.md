@@ -14,9 +14,9 @@ Java work with PostgreSQL
 
 ```xml
 <dependency>
-    <groupId>com.github.alexliesenfeld</groupId>
+    <groupId>io.github.zzagtung</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
