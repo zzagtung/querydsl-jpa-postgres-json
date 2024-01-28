@@ -74,7 +74,6 @@ public abstract class AbstractJsonSQLFunction
   }
 
   @Override
-
   public void render(
           SqlAppender sqlAppender,
           List<? extends SqlAstNode> sqlAstArguments,
