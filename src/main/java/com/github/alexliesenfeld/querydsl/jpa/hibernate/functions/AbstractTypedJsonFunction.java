@@ -1,5 +1,6 @@
 package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions;
 
+import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.sql.ast.SqlAstTranslator;
 import org.hibernate.sql.ast.spi.SqlAppender;
 import org.hibernate.sql.ast.tree.SqlAstNode;
@@ -15,6 +16,11 @@ public abstract class AbstractTypedJsonFunction extends AbstractJsonSQLFunction 
     private final String conversion;
 
     protected AbstractTypedJsonFunction(String conversion) {
+        this.conversion = conversion;
+    }
+
+    protected AbstractTypedJsonFunction(String conversion, FunctionReturnTypeResolver returnTypeResolver) {
+        super(returnTypeResolver);
         this.conversion = conversion;
     }
 

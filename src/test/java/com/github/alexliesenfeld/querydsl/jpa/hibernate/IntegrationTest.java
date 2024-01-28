@@ -93,7 +93,10 @@ public class IntegrationTest {
         QTestEntity q = QTestEntity.testEntity;
         BooleanExpression expression = q.fileName.eq("filename");
         JsonPath jsonPath = JsonPath.of(q.tags);
-        BooleanExpression exp = expression.and(jsonPath.get("key1").asText().eq("val21"));
+        BooleanExpression exp = expression.and(jsonPath.get("key1").contains("val21")); // JsonPath 의 contains
+        exp = exp.and(jsonPath.get("key1").asText().contains("val"));   // text 값의 contains => %val%
+        exp = exp.and(jsonPath.get("key1").asText().like("val%"));   // text 값의 like. value에 %를 명시.
+        exp = exp.and(jsonPath.get("key1").asText().eq("val21"));   // text 값의 equals
 
         JsonPath childCheck = JsonPath.of(q.childParam);
         exp = exp.and(childCheck.get("child").get("longField").asLong().goe(9L));
