@@ -3,6 +3,7 @@ package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.AssertionFailure;
+import org.hibernate.query.ReturnableType;
 import org.hibernate.query.sqm.function.AbstractSqmSelfRenderingFunctionDescriptor;
 import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.query.sqm.produce.function.StandardArgumentsValidators;
@@ -11,7 +12,6 @@ import org.hibernate.sql.ast.SqlAstTranslator;
 import org.hibernate.sql.ast.spi.SqlAppender;
 import org.hibernate.sql.ast.tree.SqlAstNode;
 import org.hibernate.sql.ast.tree.expression.ColumnReference;
-import org.hibernate.sql.ast.tree.predicate.Predicate;
 import org.hibernate.sql.ast.tree.update.Assignable;
 import org.hibernate.type.JavaObjectType;
 
@@ -73,25 +73,15 @@ public abstract class AbstractJsonSQLFunction
     );
   }
 
-  @Override
   public void render(
           SqlAppender sqlAppender,
           List<? extends SqlAstNode> sqlAstArguments,
-          Predicate filter,
-          Boolean respectNulls,
-          Boolean fromFirst,
+          ReturnableType<?> returnType,
           SqlAstTranslator<?> walker) {
-    doRender(sqlAppender, sqlAstArguments, walker);
+    doRender(sqlAppender, sqlAstArguments, returnType, walker);
   }
 
-  public void render(
-          SqlAppender sqlAppender,
-          List<? extends SqlAstNode> arguments,
-          SqlAstTranslator<?> walker) {
-    doRender(sqlAppender, arguments, walker);
-  }
-
-  protected abstract void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, SqlAstTranslator<?> walker);
+  protected abstract void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, ReturnableType<?> returnType, SqlAstTranslator<?> walker);
 
   @Override
   public String getArgumentListSignature() {

@@ -2,6 +2,7 @@ package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions.types;
 
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.functions.AbstractJsonSQLFunction;
 import org.hibernate.metamodel.mapping.BasicValuedMapping;
+import org.hibernate.metamodel.mapping.MappingModelExpressible;
 import org.hibernate.query.ReturnableType;
 import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.query.sqm.tree.SqmTypedNode;
@@ -33,6 +34,7 @@ public class JsonContainsSQLFunction extends AbstractJsonSQLFunction {
 
     @Override
     public ReturnableType<?> resolveFunctionReturnType(ReturnableType<?> impliedType,
+                                                       Supplier<MappingModelExpressible<?>> inferredTypeSupplier,
                                                        List<? extends SqmTypedNode<?>> arguments,
                                                        TypeConfiguration typeConfiguration) {
       // json contains result is boolean.
@@ -55,7 +57,8 @@ public class JsonContainsSQLFunction extends AbstractJsonSQLFunction {
   }
 
   @Override
-  protected void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, SqlAstTranslator<?> walker) {
+  protected void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, ReturnableType<?> returnType,
+                          SqlAstTranslator<?> walker) {
 
     super.buildPath(sb, arguments, -1, walker);
     sb.append("@>");

@@ -4,7 +4,7 @@
 
     <groupId>io.github.zzagtung</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Querydsl extension for using PostgreSQL JSON types with JPA</description>
@@ -15,13 +15,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <querydsl.version>5.2</querydsl.version>
-        <!-- spring boot 3.2.0 versions -->
-        <spring-boot.version>3.2.0</spring-boot.version>
-        <hibernate.version>6.3.1.Final</hibernate.version>
+        <querydsl.version>6.1</querydsl.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
+        <hibernate.version>6.4.4.Final</hibernate.version>
         <lombok.version>1.18.30</lombok.version>
-        <jackson.version>2.15.3</jackson.version>
-        <hypersistence.version>3.7.0</hypersistence.version>
+        <jackson.version>2.15.4</jackson.version>
     </properties>
 
     <dependencies>
@@ -37,7 +35,6 @@
             <groupId>io.github.openfeign.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
-            <classifier>jakarta</classifier>
             <scope>provided</scope>
         </dependency>
 

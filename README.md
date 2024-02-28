@@ -13,12 +13,21 @@ Java work with PostgreSQL
 ### Install dialect
 
 ```xml
+<!-- spring boot 3.2.0, hibernate 6.3, querydsl 5.2 -->
 <dependency>
     <groupId>io.github.zzagtung</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
     <version>0.1.1</version>
 </dependency>
+
+<!-- spring boot 3.2.3, hibernate 6.4, querydsl 6.1 -->
+<dependency>
+    <groupId>io.github.zzagtung</groupId>
+    <artifactId>querydsl-jpa-postgres-json</artifactId>
+    <version>0.2.0</version>
+</dependency>
 ```
+
 
 ```yaml
 # Use the predefined dialect
@@ -39,37 +48,6 @@ public class PostgreSQLCustomDialect extends PostgreSQLDialect {
 ```
 
 ### Define entity
-* [vladmihalcea/hibernate-types](https://github.com/vladmihalcea/hibernate-types) provide json type support for hibernate. **_Needs only hibernate version 5._**
-
-```xml
-<dependency>
-    <groupId>com.vladmihalcea</groupId>
-    <artifactId>hibernate-types-52</artifactId>
-    <version>2.2.1</version>
-</dependency>
-```
-
-```java
-@TypeDefs({
-  @TypeDef(name = "json", typeClass = JsonStringType.class),
-  @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class),
-  @TypeDef(name = "json-node", typeClass = JsonNodeStringType.class),
-  @TypeDef(name = "jsonb-node", typeClass = JsonNodeBinaryType.class),
-})
-@Entity
-@Table(name = "users")
-@Setter
-@Getter
-class UserEntity {
-  Integer id;
-  @Type(type="json-node")
-  JsonNode attributes;
-  @Type(type="jsonb")
-  Map<String,String> labels;
-}
-```
-
-* Hibernate 6
 
 ```java
 import org.hibernate.annotations.JdbcTypeCode;
