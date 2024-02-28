@@ -2,6 +2,7 @@ package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions.types;
 
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.functions.AbstractTypedJsonFunction;
 import org.hibernate.metamodel.mapping.BasicValuedMapping;
+import org.hibernate.metamodel.mapping.MappingModelExpressible;
 import org.hibernate.query.ReturnableType;
 import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.query.sqm.tree.SqmTypedNode;
@@ -30,6 +31,7 @@ public class TextJsonSQLFunction extends AbstractTypedJsonFunction {
 
         @Override
         public ReturnableType<?> resolveFunctionReturnType(ReturnableType<?> impliedType,
+                                                           Supplier<MappingModelExpressible<?>> inferredTypeSupplier,
                                                            List<? extends SqmTypedNode<?>> arguments,
                                                            TypeConfiguration typeConfiguration) {
             // text contains or like

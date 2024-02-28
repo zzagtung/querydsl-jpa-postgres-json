@@ -1,5 +1,6 @@
 package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions;
 
+import org.hibernate.query.ReturnableType;
 import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
 import org.hibernate.sql.ast.SqlAstTranslator;
 import org.hibernate.sql.ast.spi.SqlAppender;
@@ -24,7 +25,9 @@ public abstract class AbstractTypedJsonFunction extends AbstractJsonSQLFunction 
         this.conversion = conversion;
     }
 
-    protected void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, SqlAstTranslator<?> walker) {
+    @Override
+    protected void doRender(SqlAppender sb, List<? extends SqlAstNode> arguments, ReturnableType<?> returnType,
+                            SqlAstTranslator<?> walker) {
         if (conversion != null) {
             sb.append('(');
         }
