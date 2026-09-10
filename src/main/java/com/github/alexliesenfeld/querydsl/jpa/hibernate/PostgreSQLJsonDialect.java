@@ -31,15 +31,15 @@ public class PostgreSQLJsonDialect extends PostgresPlusDialect {
     functionContributions.getFunctionRegistry().register("hql_json_short", new ShortJsonSQLFunction());
     functionContributions.getFunctionRegistry().register("hql_json_bool", new BoolJsonSQLFunction());
 
-    functionContributions.getFunctionRegistry().register("hql_json_" + "array_length", new LongJsonSQLFunction());
-    functionContributions.getFunctionRegistry().register("hql_jsonb_" + "array_length", new LongJsonSQLFunction().setJsonb(true));
+    functionContributions.getFunctionRegistry().register("hql_json_" + "array_length", new JsonArrayLengthSQLFunction(false));
+    functionContributions.getFunctionRegistry().register("hql_jsonb_" + "array_length", new JsonArrayLengthSQLFunction(true));
 
-    functionContributions.getFunctionRegistry().register("hql_json_" + "typeof", new LongJsonSQLFunction());
-    functionContributions.getFunctionRegistry().register("hql_jsonb_" + "typeof", new LongJsonSQLFunction().setJsonb(true));
+    functionContributions.getFunctionRegistry().register("hql_json_" + "typeof", new JsonTypeofSQLFunction(false));
+    functionContributions.getFunctionRegistry().register("hql_jsonb_" + "typeof", new JsonTypeofSQLFunction(true));
 
-
-    functionContributions.getFunctionRegistry().register("hql_json_contains", new JsonContainsSQLFunction());
-    functionContributions.getFunctionRegistry().register("hql_jsonb_contains", new JsonContainsSQLFunction().setJsonb(true));
+    // PostgreSQL only offers @> for jsonb, so there is no hql_json_contains counterpart. JsonPath
+    // enforces this by rejecting contains() on a json path before any SQL is rendered.
+    functionContributions.getFunctionRegistry().register("hql_jsonb_contains", new JsonContainsSQLFunction(true));
 
   }
 
