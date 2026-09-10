@@ -1,3 +1,13 @@
+0.3.0:
+- updated to spring-boot 3.4.5, hibernate 6.6.13 and querydsl 6.12 (also jackson 2.18.3, postgresql driver 42.7.5, testcontainers 1.20.6); requires hibernate 6.6
+- fixed JsonPath rendering of paths with three or more keys: the intermediate keys were emitted back to front, so a.get("b").get("c").get("d") queried -> 'c' -> 'b' ->> 'd' and silently matched no rows (one and two key paths were unaffected)
+- fixed JsonPath.type() and JsonPath.length(), which were registered as a bigint cast and therefore never worked; they now render json/jsonb_typeof and json/jsonb_array_length
+- JsonPath.length() evaluates to null for a row where the path is absent or holds a non-array, instead of aborting the whole query with "cannot get array length of a non-array"
+- fixed the json and jsonb function registrations being interchangeable; the flavour is now fixed per registration and is no longer mutable after registration (setJsonb has been removed from the function descriptors)
+- removed the hql_json_contains registration: PostgreSQL offers @> for jsonb only, and JsonPath.contains() rejects a json path before rendering
+- every cast function now declares its real return type instead of JavaObjectType, so json expressions can be projected into a select list and composed with other expressions
+- test suite expanded from 2 to 53 tests, covering the whole JsonPath surface, the json/jsonb distinction and the rendered SQL
+
 0.0.9-SNAPSHOT:
 - updated to spring-boot 3.1 and hibernate 6.2
 - generation of full-parametric SQL queries (previous version generated mixed parametric / static queries, which required messing with Hibernate internals and moreover could lead to SQL injections)
