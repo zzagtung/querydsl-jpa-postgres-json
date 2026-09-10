@@ -21,6 +21,8 @@ that change between them. Pick the row matching your Spring Boot version:
 | `0.2.0` | 3.2.3       | 6.4       | 6.1      | 21   |
 | `0.1.1` | 3.2.0       | 6.3       | 5.2      | 17   |
 
+Maven:
+
 ```xml
 <dependency>
     <groupId>io.github.zzagtung</groupId>
@@ -28,6 +30,60 @@ that change between them. Pick the row matching your Spring Boot version:
     <version>0.3.0</version>
 </dependency>
 ```
+
+Gradle:
+
+```kotlin
+dependencies {
+    implementation("io.github.zzagtung:querydsl-jpa-postgres-json:0.3.0")
+}
+```
+
+### Supply Hibernate and Querydsl yourself
+
+This library extends Hibernate and Querydsl SPIs rather than owning them, so it declares
+`hibernate-core` and `querydsl-jpa` as `provided`, and `jackson-databind` and `lombok` as
+`optional`. None of them reach you transitively — you choose the versions, within the range the
+table above supports. A build that adds only this dependency compiles and then fails at runtime
+with `NoClassDefFoundError`.
+
+With Spring Boot managing versions, that means:
+
+```kotlin
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa") // brings hibernate-core
+    implementation("io.github.openfeign.querydsl:querydsl-jpa:6.12")
+    annotationProcessor("io.github.openfeign.querydsl:querydsl-apt:6.12:jakarta")
+
+    implementation("io.github.zzagtung:querydsl-jpa-postgres-json:0.3.0")
+}
+```
+
+### Snapshot builds
+
+Snapshots are published to Central's snapshot repository, which releases are not. Reading it needs
+no credentials:
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven {
+        name = "centralSnapshots"
+        url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        mavenContent { snapshotsOnly() }
+        content { includeGroup("io.github.zzagtung") }
+    }
+}
+
+configurations.all {
+    // Gradle caches changing modules for 24h, so without this you keep building against a stale one
+    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+}
+```
+
+`snapshotsOnly()` and `includeGroup` keep Gradle from querying the snapshot repository for every
+other dependency in the build. For Maven, add the same URL as a `<repository>` with
+`<snapshots><enabled>true</enabled></snapshots>`.
 
 ```yaml
 # Use the predefined dialect
