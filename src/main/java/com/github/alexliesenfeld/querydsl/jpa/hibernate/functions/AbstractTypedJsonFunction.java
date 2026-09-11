@@ -34,7 +34,7 @@ public abstract class AbstractTypedJsonFunction extends AbstractJsonSQLFunction 
         buildPath(sb, arguments, -1, walker);
         sb.append("->>");
 
-        arguments.get(arguments.size() - 1).accept(walker);
+        arguments.getLast().accept(walker);
 
         if (conversion != null) {
             sb.append(")::");
