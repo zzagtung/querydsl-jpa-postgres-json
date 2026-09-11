@@ -1,9 +1,9 @@
 package com.github.alexliesenfeld.querydsl.jpa.hibernate.functions;
 
 import org.hibernate.metamodel.mapping.BasicValuedMapping;
-import org.hibernate.metamodel.mapping.MappingModelExpressible;
 import org.hibernate.query.ReturnableType;
 import org.hibernate.query.sqm.produce.function.FunctionReturnTypeResolver;
+import org.hibernate.query.sqm.sql.SqmToSqlAstConverter;
 import org.hibernate.query.sqm.tree.SqmTypedNode;
 import org.hibernate.sql.ast.tree.SqlAstNode;
 import org.hibernate.type.BasicType;
@@ -30,7 +30,7 @@ public class FixedReturnTypeResolver implements FunctionReturnTypeResolver {
 
   @Override
   public ReturnableType<?> resolveFunctionReturnType(ReturnableType<?> impliedType,
-                                                     Supplier<MappingModelExpressible<?>> inferredTypeSupplier,
+                                                     SqmToSqlAstConverter converter,
                                                      List<? extends SqmTypedNode<?>> arguments,
                                                      TypeConfiguration typeConfiguration) {
     return type;
