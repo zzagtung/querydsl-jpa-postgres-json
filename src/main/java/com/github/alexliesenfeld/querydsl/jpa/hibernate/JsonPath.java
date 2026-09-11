@@ -214,7 +214,11 @@ public class JsonPath implements Path<Object> {
     return Expressions.stringTemplate(sb.toString(), args);
   }
 
-  /** json array length */
+  /**
+   * Length of the JSON array at this path. Evaluates to {@code null} -- and therefore matches
+   * nothing rather than failing the query -- for a row where this path is absent or holds anything
+   * other than an array.
+   */
   public NumberTemplate<Integer> length() {
     List<Object> args = properties();
     StringBuilder sb = new StringBuilder();

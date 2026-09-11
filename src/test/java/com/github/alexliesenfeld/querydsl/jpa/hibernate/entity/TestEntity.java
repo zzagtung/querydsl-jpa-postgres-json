@@ -1,6 +1,6 @@
 package com.github.alexliesenfeld.querydsl.jpa.hibernate.entity;
 
-import com.github.alexliesenfeld.querydsl.jpa.hibernate.EnumTest;
+import com.github.alexliesenfeld.querydsl.jpa.hibernate.SampleEnum;
 import com.github.alexliesenfeld.querydsl.jpa.hibernate.dto.SampleData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,5 +35,18 @@ public class TestEntity {
     private SampleData childParam;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    private List<EnumTest> enumList;
+    private List<SampleEnum> enumList;
+
+    /** Lets one row hold an array and another a scalar under the same key. */
+    @JdbcTypeCode(SqlTypes.JSON)
+    private Map<String, Object> mixedTags;
+
+    /**
+     * SqlTypes.JSON maps to a jsonb column on PostgreSQL, so this is the only column that is really
+     * of type json. JsonPath.isJsonb() reads the annotation and cannot tell the two apart, which is
+     * why the json flavour has to be requested explicitly with JsonPath.ofJson.
+     */
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition = "json")
+    private SampleData jsonChildParam;
 }
