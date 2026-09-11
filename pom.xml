@@ -22,6 +22,11 @@
         <jackson.version>2.18.3</jackson.version>
         <postgresql.version>42.7.5</postgresql.version>
         <testcontainers.version>1.20.6</testcontainers.version>
+
+        <!-- docker-java defaults to Docker API 1.32, which modern daemons reject
+             (Docker Engine 25+ requires at least 1.40). Override on the command
+             line with -Ddocker.api.version=... for an older daemon. -->
+        <docker.api.version>1.41</docker.api.version>
     </properties>
 
     <dependencies>
@@ -111,6 +116,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.3</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <api.version>${docker.api.version}</api.version>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
