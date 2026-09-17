@@ -4,7 +4,7 @@
 
     <groupId>io.github.zzagtung</groupId>
     <artifactId>querydsl-jpa-postgres-json</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Querydsl extension for using PostgreSQL JSON types with JPA</description>
@@ -291,7 +291,7 @@
         <connection>scm:git:https://github.com/zzagtung/querydsl-jpa-postgres-json.git</connection>
         <developerConnection>scm:git:https://github.com/zzagtung/querydsl-jpa-postgres-json.git</developerConnection>
         <url>http://github.com/zzagtung/querydsl-jpa-postgres-json</url>
-        <tag>v0.3.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
 </project>
