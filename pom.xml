@@ -145,6 +145,7 @@
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <tagNameFormat>v@{project.version}</tagNameFormat>
+                    <releaseProfiles>release-sign-artifacts</releaseProfiles>
                 </configuration>
             </plugin>
 
