@@ -7,6 +7,7 @@
 - removed the hql_json_contains registration: PostgreSQL offers @> for jsonb only, and JsonPath.contains() rejects a json path before rendering
 - every cast function now declares its real return type instead of JavaObjectType, so json expressions can be projected into a select list and composed with other expressions
 - test suite expanded from 2 to 53 tests, covering the whole JsonPath surface, the json/jsonb distinction and the rendered SQL
+- the test JVM now pins the Docker API version to 1.41 (property docker.api.version), because docker-java defaults to 1.32 and daemons that report a higher MinAPIVersion reject it, which made Testcontainers fail with "Could not find a valid Docker environment"
 
 0.0.9-SNAPSHOT:
 - updated to spring-boot 3.1 and hibernate 6.2
